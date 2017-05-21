@@ -1,1 +1,2 @@
-hello!
+<% response.sendRedirect("loginController"); %>
+
