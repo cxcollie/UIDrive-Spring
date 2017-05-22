@@ -8,8 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cxcollie.uidrive.entity.AppUser;
@@ -18,6 +19,7 @@ import com.cxcollie.uidrive.service.DriveService;
 import com.cxcollie.uidrive.service.UserService;
 
 @Controller
+@SessionAttributes("appUser")
 public class UserController {
 
 	@Autowired
@@ -34,31 +36,26 @@ public class UserController {
 	}
 	
 	@PostMapping("/loginController")
-	public String loginPage(Model theModel, @RequestParam("userName") String name,
-			@RequestParam("password") String pwd, RedirectAttributes redirectAttrs,
-			@ModelAttribute("appUser") AppUser newUser) {
+	public String loginPage(Model theModel, @RequestParam("loginUserName") String name,
+			@RequestParam("loginPassword") String pwd, @ModelAttribute("appUser") AppUser newUser) {
 		AppUser loginTry = userService.getUser(name, pwd);
 		if (loginTry != null) {
 			// verification passed
-			redirectAttrs.addFlashAttribute("appUser", loginTry);
+			theModel.addAttribute("appUser", loginTry);
 			return "redirect:/user-center";
 		} else {
-			System.out.println("login failed\n"); // 1
-			//redirectAttrs.addFlashAttribute("appUser", new AppUser());
-			//theModel.addAttribute("appUser", new AppUser());
 			return "login";
 		}
 	}
 	
 	@PostMapping("/registerController")
-	public String registerPage(Model theModel, @ModelAttribute("appUser") AppUser newUser, 
-			RedirectAttributes redirectAttrs) {
+	public String registerPage(Model theModel, @ModelAttribute("appUser") AppUser newUser) {
 		boolean registerResult = userService.registerUser(newUser);
 		if (registerResult) {
 			// register succeed
-			redirectAttrs.addFlashAttribute("appUser", newUser);
 			return "redirect:/user-center";
 		} else {
+			// register failed
 			return "login";
 		}
 	}
@@ -81,15 +78,22 @@ public class UserController {
 	
 	@GetMapping("/searchDriveController")
 	public String searchDrive(Model theModel, @ModelAttribute("appUser") AppUser theUser) {
-		System.out.println(theUser); // 1
+		List<Drive> availableDrives = driveService.getDrives();
+		theModel.addAttribute("availableDrives", availableDrives);
 		
 		return "search-drive";
 	}
 	
 	@GetMapping("/shareDriveController")
 	public String shareDrive(Model theModel, @ModelAttribute("appUser") AppUser theUser) {
-		System.out.println(theUser); // 1
 		
 		return "share-drive";
+	}
+	
+	@GetMapping("/confirmBookController")
+	public String bookDrive(Model theModel, @ModelAttribute("appUser") AppUser theUser, 
+			@RequestParam("bookedDriveID") int theBookedDriveID) {
+
+		return "redirect:/user-center";
 	}
 }

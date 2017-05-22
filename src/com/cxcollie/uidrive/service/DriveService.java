@@ -1,5 +1,7 @@
 package com.cxcollie.uidrive.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,5 +23,10 @@ public class DriveService {
 	@Transactional
 	public void saveDrive(Drive theDrive) {
 		driveDAO.saveDrive(theDrive);
+	}
+
+	@Transactional
+	public List<Drive> getDrives() {
+		return driveDAO.getDrivesByEndPlace("");
 	}
 }

@@ -1,7 +1,10 @@
 package com.cxcollie.uidrive.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +27,21 @@ public class DriveDAOSqlImpl implements DriveDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Drive theDrive = currentSession.get(Drive.class, theId);
 		return theDrive;
+	}
+
+	@Override
+	public List<Drive> getDrivesByEndPlace(String theEndPlace) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Drive> theQuery;
+		if ("".equals(theEndPlace)) {
+			theQuery = currentSession.createQuery("from Drive", Drive.class);
+		} else {
+			theQuery = currentSession.createQuery("from Drive where endPlace=:endPlace", Drive.class);
+			theQuery.setParameter("endPlace", theEndPlace);
+		}
+		
+		List<Drive> drives = theQuery.getResultList();
+		return drives;
 	}
 
 }

@@ -27,10 +27,10 @@
 
  <h2>Login: </h2>
 <form action="loginController" method="POST">
-	<input type="text" name="userName"
+	<input type="text" name="loginUserName"
 		placeholder="what's your name?" />
 	<br>
-	<input type="text" name="password"
+	<input type="text" name="loginPassword"
 		placeholder="what's your password?" />
 	<br>
 	<input type="submit" value="Login" />
