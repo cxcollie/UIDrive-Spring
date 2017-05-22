@@ -77,23 +77,38 @@ public class UserController {
 	}
 	
 	@GetMapping("/searchDriveController")
-	public String searchDrive(Model theModel, @ModelAttribute("appUser") AppUser theUser) {
+	public String searchDrive(Model theModel,
+			@RequestParam("endPlaceForm") String endPlaceForm, @RequestParam("startPlaceForm") String startPlaceForm,
+			@RequestParam("timeLimitForm") String timeLimitForm, @RequestParam("startTimeForm") String startTimeForm) {
 		List<Drive> availableDrives = driveService.getDrives();
 		theModel.addAttribute("availableDrives", availableDrives);
 		
-		return "search-drive";
+		return "search-drive-result";
+	}
+	
+	@GetMapping("/searchDriveFormController")
+	public String searchDriveForm(Model theModel) {
+		
+		
+		return "search-drive-form";
 	}
 	
 	@GetMapping("/shareDriveController")
-	public String shareDrive(Model theModel, @ModelAttribute("appUser") AppUser theUser) {
-		
-		return "share-drive";
+	public String shareDrive(Model theModel, @ModelAttribute("drive") Drive theSharedDrive) {
+		System.out.println(theSharedDrive); // 1
+		theModel.addAttribute("drive", theSharedDrive);
+		return "share-drive-result";
+	}
+	
+	@GetMapping("/shareDriveFormController")
+	public String shareDriveForm(Model theModel) {
+		theModel.addAttribute("drive", new Drive());
+		return "share-drive-form";
 	}
 	
 	@GetMapping("/confirmBookController")
-	public String bookDrive(Model theModel, @ModelAttribute("appUser") AppUser theUser, 
-			@RequestParam("bookedDriveID") int theBookedDriveID) {
-
-		return "redirect:/user-center";
+	public String bookDrive(Model theModel, @RequestParam("bookedDriveID") int theBookedDriveID) {
+		theModel.addAttribute("drive", new Drive());
+		return "search-drive-booked";
 	}
 }

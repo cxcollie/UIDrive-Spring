@@ -26,10 +26,11 @@ driveID: ${appUser.driveID} at ${appUser.eventTime}
 	<br>
 	from: ${drive.startPlace} to ${drive.endPlace}
 	<br>
+	
 </c:if>
 
-<a href="shareDriveController">Share a drive</a>
-<a href="searchDriveController">Search a drive</a>
+<a href="shareDriveFormController">Share a drive</a>
+<a href="searchDriveFormController">Search a drive</a>
 
 </body>
 </html>
