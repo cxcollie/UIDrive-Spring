@@ -1,2 +1,2 @@
-<% response.sendRedirect("loginController"); %>
+<% response.sendRedirect("accountPageController"); %>
 

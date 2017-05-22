@@ -9,13 +9,32 @@
 </head>
 <body>
 <h1>Welcome to login!</h1>
- <form:form action="userCenterController" modelAttribute="appUser" method="post">
+ <h2>Register: </h2>
+ <form:form action="registerController" modelAttribute="appUser" method="post">
  	user name: <form:input path="userName" />
  	<br>
  	password: <form:input path="password" />
  	<br>
- 	<input type="submit" value="Go!" />
+ 	email: <form:input path="email" />
+ 	<br>
+ 	<input type="submit" value="Register" />
  	
  </form:form>
+ 
+<br>
+<hr>
+<br>
+
+ <h2>Login: </h2>
+<form action="loginController" method="POST">
+	<input type="text" name="userName"
+		placeholder="what's your name?" />
+	<br>
+	<input type="text" name="password"
+		placeholder="what's your password?" />
+	<br>
+	<input type="submit" value="Login" />
+</form>
+
 </body>
 </html>

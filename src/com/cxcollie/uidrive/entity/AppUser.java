@@ -26,10 +26,10 @@ public class AppUser {
 	private String password;
 	
 	@Column(name="lockedAs")
-	private String lockedAs;
+	private Integer lockedAs;
 	
 	@Column(name="driveID")
-	private String driveID;
+	private Integer driveID;
 	
 	@Column(name="eventTime")
 	private String eventTime;
@@ -76,19 +76,19 @@ public class AppUser {
 		this.password = password;
 	}
 
-	public String getLockedAs() {
+	public Integer getLockedAs() {
 		return lockedAs;
 	}
 
-	public void setLockedAs(String lockedAs) {
+	public void setLockedAs(Integer lockedAs) {
 		this.lockedAs = lockedAs;
 	}
 
-	public String getDriveID() {
+	public Integer getDriveID() {
 		return driveID;
 	}
 
-	public void setDriveID(String driveID) {
+	public void setDriveID(Integer driveID) {
 		this.driveID = driveID;
 	}
 
